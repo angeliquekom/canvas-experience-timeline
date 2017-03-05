@@ -1,0 +1,137 @@
+</head>
+<body>
+<div style="position: absolute; top: 50px; left: 50px;">
+<canvas id="canvas" width="1200" height="800" style="background-color: #fafafa;"></canvas>
+</div>
+<script type="text/javascript">
+
+	window.addEventListener('load', eventWindowLoaded, false);
+
+	function eventWindowLoaded() {
+
+	   canvasApp();
+
+	}
+
+	function canvasApp() {
+
+		var job = [
+			{action: 'Pi, UK', position: 'Front end Developer', duration: normalize(13, 122), color: '#0d47a1'},
+			{action: 'Work Angel, UK', position: 'Front end Developer', duration: normalize(2, 122), color: '#1565c0'},
+			{action: '', position: '', duration: normalize(2, 122), color: '#eeeeee'},
+			{action: 'Illumina, UK', position: 'Front end Developer (Intern)', duration: normalize(3, 122), color: '#33691e'},
+			{action: 'Computer Technology Institute, GR', position: 'Web Developer', duration: normalize(12, 122), color: '#2196f3'},
+			{action: 'Netrinno, GR', duration: normalize(9, 122), position: 'Software Developer', color: '#64b5f6'},
+			{action: '', position: '', duration: normalize(15, 122), color: '#eeeeee'},
+			{action: 'Think Digital, GR', position: 'Intern Developer', duration: normalize(3, 122), color: '#7cb342'},
+			{action: '', position: '', duration: normalize(63, 122), color: '#eeeeee'}
+		];
+
+		var education = [
+			{action: '',position: '',  duration: normalize(6, 122), color: '#eeeeee'},
+			{action: 'Master Studies, GR', position: 'Informatics of Life Sciences', duration: normalize(34, 122), color: '#33691e'},
+			{action: '', position: '', duration: normalize(7, 122), color: '#eeeeee'},
+			{action: 'Undergraduate studies, GR', position: 'Computer Engineering', duration: normalize(75, 122), color: '#7cb342'}
+		];
+
+		var publications = [
+			{action: '',position: '',  duration: normalize(5, 122), color: '#eeeeee'},
+			{action: 'Publication', position: '', duration: normalize(1, 122), color: '#00695c'},
+			{action: '', position: '', duration: normalize(25, 122), color: '#eeeeee'},
+			{action: 'Publication', position: '', duration: normalize(1, 122), color: '#00695c'},
+			{action: '', position: '', duration: normalize(90, 122), color: '#eeeeee'}
+		];
+
+		var year = [
+			{action: '2017', duration: normalize(2, 122), color: '#f5f5f5'},
+			{action: '2016', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2015', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2014', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2013', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2012', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2011', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2010', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2009', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2008', duration: normalize(12, 122), color: '#f5f5f5'},
+			{action: '2007', duration: normalize(12, 122), color: '#f5f5f5'}
+		];
+
+		var open = [
+			{action: 'GitHub', position: '', duration: normalize(16, 122), color: '#e64a19'},
+			{action: '', position: '', duration: normalize(106, 122), color: '#eeeeee'}
+		]
+
+
+		function normalize(value, sum) {
+			return Math.round(value * 700 / sum);
+		}
+
+		var theCanvas = document.getElementById("canvas");
+	  var context = theCanvas.getContext("2d");
+		context.fillStyle = '#eeeeee';
+
+		drawLines(year, 20);
+		drawScreen(job, 50, 220, 150, 20, 'Work Experience');
+		drawScreen(education, 380, 520, 150, 20, 'Education');
+		drawScreen(publications, 680, 760, 150, 20, 'Publications');
+		drawScreen(open, 930, 980, 150, 20, 'Open Source');
+
+		function drawLines(conf, top) {
+			var sumArray = [];
+
+			conf.map(function(m, i) {
+				context.lineWidth = 0.5;
+				context.strokeStyle = '#bdbdbd';
+				context.beginPath();
+				context.moveTo(35, sum(sumArray) + m.duration + top);
+				context.lineTo(1000, sum(sumArray) + m.duration + top);
+				context.stroke();
+				context.textBaseline = 'top';
+				context.font="bold 8px sans";
+				context.fillStyle = "#757575";
+				context.fillText(m.action, 0, sum(sumArray) + top + m.duration - 4);
+				sumArray.push(m.duration);
+			});
+		}
+
+		function drawScreen(conf, text, start, width, top, title) {
+			context.font="bold 10px sans";
+			context.fillText(title, start, 2);
+
+			context.fillStyle  = '#ffffff';
+			context.shadowBlur = 20;
+			context.shadowColor = "#9e9e9e";
+			context.fillRect(start, top, width, 700);
+
+			var sumArray = [];
+
+			conf.map(function(m, i) {
+
+				context.fillStyle = m.color;
+				context.shadowBlur = 0;
+
+				context.fillRect(start, sum(sumArray) + top, width, m.duration);
+				context.fillStyle  = '#000000';
+				context.font = '11px';
+				context.textBaseline = 'top';
+				context.font="bold 8px Verdana";
+				context.fillStyle = '#424242';
+				context.shadowBlur = 0;
+				context.fillText(m.action, text, sum(sumArray) + top + m.duration / 2  - 5);
+				context.fillStyle = '#9e9e9e';
+				context.fillText(m.position, text, sum(sumArray) + top + m.duration / 2 + 5);
+				sumArray.push(m.duration);
+			});
+		}
+
+		function sum(array) {
+			var sum = array.reduce(function(acc, val) {
+				return acc + val;
+			}, 0);
+
+			return sum;
+		}
+}
+</script>
+</body>
+</html>
